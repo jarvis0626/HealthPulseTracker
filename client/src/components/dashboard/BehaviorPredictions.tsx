@@ -113,24 +113,24 @@ export default function BehaviorPredictions() {
                   </div>
                   <div className="flex flex-col items-end">
                     <span className={`text-xs ${
-                      prediction.confidence > 80 
+                      (prediction.confidence || 0) > 80 
                         ? "text-green-500" 
-                        : prediction.confidence > 60 
+                        : (prediction.confidence || 0) > 60 
                         ? "text-amber-500" 
                         : "text-red-500"
                     } font-medium`}>
-                      {prediction.confidence}% confidence
+                      {prediction.confidence || 0}% confidence
                     </span>
                     <div className="w-16 h-2 bg-neutral-200 rounded-full mt-1">
                       <div 
                         className={`h-2 ${
-                          prediction.confidence > 80 
+                          (prediction.confidence || 0) > 80 
                             ? "bg-green-500" 
-                            : prediction.confidence > 60 
+                            : (prediction.confidence || 0) > 60 
                             ? "bg-amber-500" 
                             : "bg-red-500"
                         } rounded-full`} 
-                        style={{ width: `${prediction.confidence}%` }}
+                        style={{ width: `${prediction.confidence || 0}%` }}
                       ></div>
                     </div>
                   </div>
