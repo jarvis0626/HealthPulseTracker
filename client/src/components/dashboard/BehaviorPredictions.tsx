@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { usePredictions, useConfirmPrediction } from "@/hooks/usePredictions";
 import { useToast } from "@/hooks/use-toast";
-import { Terminal, Bed } from "lucide-react";
+import { Terminal, Bed, Smile, Heart, DollarSign } from "lucide-react";
 
 export default function BehaviorPredictions() {
   const { data: predictions, isLoading, error } = usePredictions();
@@ -27,11 +27,23 @@ export default function BehaviorPredictions() {
     });
   };
   
-  const getActivityIcon = (type: string) => {
-    if (type.toLowerCase().includes("run")) {
+  const getActivityIcon = (type: string | null) => {
+    // Safeguard against null or undefined values
+    if (!type) {
       return <Terminal className="text-primary h-5 w-5" />;
-    } else if (type.toLowerCase().includes("sleep")) {
+    }
+    
+    const typeStr = type.toLowerCase();
+    if (typeStr.includes("run") || typeStr.includes("activity")) {
+      return <Terminal className="text-primary h-5 w-5" />;
+    } else if (typeStr.includes("sleep")) {
       return <Bed className="text-secondary h-5 w-5" />;
+    } else if (typeStr.includes("mood")) {
+      return <Smile className="text-yellow-500 h-5 w-5" />;
+    } else if (typeStr.includes("prayer") || typeStr.includes("spiritual")) {
+      return <Heart className="text-red-500 h-5 w-5" />; 
+    } else if (typeStr.includes("financ")) {
+      return <DollarSign className="text-green-500 h-5 w-5" />;
     }
     // Add more icons as needed
     return <Terminal className="text-primary h-5 w-5" />;
@@ -90,12 +102,12 @@ export default function BehaviorPredictions() {
                 <div className="flex justify-between">
                   <div className="flex items-center">
                     <div className="w-10 h-10 rounded-full flex items-center justify-center bg-primary/10 mr-3">
-                      {getActivityIcon(prediction.activityType)}
+                      {getActivityIcon(prediction.predictionType)}
                     </div>
                     <div>
-                      <h4 className="font-semibold">{prediction.activityType}</h4>
+                      <h4 className="font-semibold">{prediction.category}</h4>
                       <p className="text-xs text-neutral-800">
-                        Predicted today at {prediction.predictedTime}
+                        {prediction.predictedValue && prediction.predictedValue.slice(0, 30)}...
                       </p>
                     </div>
                   </div>
