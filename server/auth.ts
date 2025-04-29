@@ -11,23 +11,31 @@ import dotenv from "dotenv";
 // Load environment variables
 dotenv.config();
 
+// Define custom user type for passport
 declare global {
   namespace Express {
-    interface User extends User {}
+    // This extends the existing User interface from Express 
+    interface User {
+      id: number;
+      username: string;
+      fullName: string;
+      email: string;
+      // Other user properties as needed
+    }
   }
 }
 
 const scryptAsync = promisify(scrypt);
 
 // Secure password hashing
-async function hashPassword(password: string): Promise<string> {
+export async function hashPassword(password: string): Promise<string> {
   const salt = randomBytes(16).toString("hex");
   const buf = (await scryptAsync(password, salt, 64)) as Buffer;
   return `${buf.toString("hex")}.${salt}`;
 }
 
 // Secure password comparison
-async function comparePasswords(supplied: string, stored: string): Promise<boolean> {
+export async function comparePasswords(supplied: string, stored: string): Promise<boolean> {
   const [hashed, salt] = stored.split(".");
   const hashedBuf = Buffer.from(hashed, "hex");
   const suppliedBuf = (await scryptAsync(supplied, salt, 64)) as Buffer;
@@ -76,7 +84,9 @@ export function setupAuth(app: Express) {
   );
 
   // Serialize/deserialize user to/from session
-  passport.serializeUser((user, done) => done(null, user.id));
+  passport.serializeUser((user: Express.User, done) => {
+    done(null, user.id);
+  });
   
   passport.deserializeUser(async (id: number, done) => {
     try {
@@ -116,7 +126,7 @@ export function setupAuth(app: Express) {
   });
 
   app.post("/api/login", (req: Request, res: Response, next: NextFunction) => {
-    passport.authenticate("local", (err: Error, user: User, info: { message: string }) => {
+    passport.authenticate("local", (err: Error | null, user: User | false, info: { message: string } | undefined) => {
       if (err) return next(err);
       if (!user) return res.status(401).json({ error: info?.message || "Authentication failed" });
       
@@ -131,7 +141,7 @@ export function setupAuth(app: Express) {
   });
 
   app.post("/api/logout", (req: Request, res: Response) => {
-    req.logout((err) => {
+    req.logout((err: any) => {
       if (err) return res.status(500).json({ error: "Failed to logout" });
       res.sendStatus(200);
     });
@@ -143,7 +153,8 @@ export function setupAuth(app: Express) {
     }
     
     // Remove password from response
-    const { password, ...userWithoutPassword } = req.user as User;
+    const user = req.user as User;
+    const { password, ...userWithoutPassword } = user;
     res.json(userWithoutPassword);
   });
 
