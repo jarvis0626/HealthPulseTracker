@@ -22,6 +22,7 @@ import {
   PredictionType
 } from "./behavioral-analysis";
 import { setupAuth } from "./auth";
+import { registerTriggerRoutes } from "./trigger";
 
 // Error handler for async functions
 const asyncHandler = (fn: Function) => (req: Request, res: Response, next: NextFunction) => {
@@ -31,6 +32,9 @@ const asyncHandler = (fn: Function) => (req: Request, res: Response, next: NextF
 export async function registerRoutes(app: Express): Promise<Server> {
   // Setup authentication
   setupAuth(app);
+  
+  // Register trigger routes for manual operations
+  registerTriggerRoutes(app);
   
   // API routes
   const apiRouter = app;

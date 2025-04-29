@@ -1,6 +1,11 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import { seedDatabase } from "./seed";
+import dotenv from "dotenv";
+
+// Load environment variables
+dotenv.config();
 
 const app = express();
 app.use(express.json());
@@ -44,8 +49,20 @@ app.use((req, res, next) => {
     const message = err.message || "Internal Server Error";
 
     res.status(status).json({ message });
-    throw err;
+    console.error(err);
   });
+
+  // Seed the database in development mode
+  const shouldSeed = process.env.SEED_DATABASE === 'true' || app.get("env") === "development";
+  if (shouldSeed) {
+    try {
+      log("Seeding database with sample data...");
+      await seedDatabase();
+      log("Database seeding completed successfully!");
+    } catch (error) {
+      log("Error seeding database:", error);
+    }
+  }
 
   // importantly only setup vite in development and after
   // setting up all the other routes so the catch-all route
