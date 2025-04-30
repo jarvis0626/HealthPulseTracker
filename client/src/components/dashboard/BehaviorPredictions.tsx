@@ -97,7 +97,7 @@ export default function BehaviorPredictions() {
       <div className="space-y-4">
         {predictions && predictions.length > 0 ? (
           predictions.map((prediction) => (
-            <Card key={prediction.id} className="bg-white">
+            <Card key={prediction.id} className="bg-white transform transition-all duration-300 hover:shadow-md hover:-translate-y-1">
               <CardContent className="p-4">
                 <div className="flex justify-between">
                   <div className="flex items-center">

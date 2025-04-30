@@ -54,7 +54,7 @@ export default function MetricsOverview({ startDate, endDate }: MetricsOverviewP
   
   return (
     <div className="grid grid-cols-2 gap-3 mb-4">
-      <Card className="bg-white">
+      <Card className="bg-white transform transition-all duration-300 hover:shadow-md hover:scale-105">
         <CardContent className="p-4">
           <h4 className="text-sm font-medium text-neutral-800 mb-2">Total Steps</h4>
           <div className="flex items-end">
@@ -66,7 +66,7 @@ export default function MetricsOverview({ startDate, endDate }: MetricsOverviewP
         </CardContent>
       </Card>
       
-      <Card className="bg-white">
+      <Card className="bg-white transform transition-all duration-300 hover:shadow-md hover:scale-105">
         <CardContent className="p-4">
           <h4 className="text-sm font-medium text-neutral-800 mb-2">Calories Burned</h4>
           <div className="flex items-end">
@@ -78,7 +78,7 @@ export default function MetricsOverview({ startDate, endDate }: MetricsOverviewP
         </CardContent>
       </Card>
       
-      <Card className="bg-white">
+      <Card className="bg-white transform transition-all duration-300 hover:shadow-md hover:scale-105">
         <CardContent className="p-4">
           <h4 className="text-sm font-medium text-neutral-800 mb-2">Active Minutes</h4>
           <div className="flex items-end">
@@ -90,7 +90,7 @@ export default function MetricsOverview({ startDate, endDate }: MetricsOverviewP
         </CardContent>
       </Card>
       
-      <Card className="bg-white">
+      <Card className="bg-white transform transition-all duration-300 hover:shadow-md hover:scale-105">
         <CardContent className="p-4">
           <h4 className="text-sm font-medium text-neutral-800 mb-2">Avg. Heart Rate</h4>
           <div className="flex items-end">

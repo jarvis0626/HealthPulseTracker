@@ -84,7 +84,7 @@ export default function DetailCharts({ startDate, endDate }: DetailChartsProps) 
   
   return (
     <div className="space-y-4">
-      <Card className="bg-white">
+      <Card className="bg-white transform transition-all duration-300 hover:shadow-md hover:scale-105">
         <CardContent className="p-4">
           <h3 className="font-semibold mb-3">Activity Distribution</h3>
           <div className="h-40">
@@ -93,7 +93,7 @@ export default function DetailCharts({ startDate, endDate }: DetailChartsProps) 
         </CardContent>
       </Card>
       
-      <Card className="bg-white">
+      <Card className="bg-white transform transition-all duration-300 hover:shadow-md hover:scale-105">
         <CardContent className="p-4">
           <h3 className="font-semibold mb-3">Heart Rate Zones</h3>
           <div className="h-40">
@@ -120,7 +120,7 @@ export default function DetailCharts({ startDate, endDate }: DetailChartsProps) 
         </CardContent>
       </Card>
       
-      <Card className="bg-white">
+      <Card className="bg-white transform transition-all duration-300 hover:shadow-md hover:scale-105">
         <CardContent className="p-4">
           <h3 className="font-semibold mb-3">Sleep Analysis</h3>
           <div className="h-40">
