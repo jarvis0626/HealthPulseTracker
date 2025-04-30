@@ -53,16 +53,19 @@ export default function DetailCharts({ startDate, endDate }: DetailChartsProps) 
   const { data: sleepData, options: sleepOptions } = sleepAnalysisChartConfig();
   
   // Calculate sleep metrics
-  const avgSleep = healthData
-    ? healthData.reduce((sum, data) => sum + (data.sleepDuration || 0), 0) / (healthData.filter(d => d.sleepDuration).length || 1)
+  const avgSleep = Array.isArray(healthData) && healthData.length > 0
+    ? healthData.reduce((sum, data) => sum + (data.sleepDuration || 0), 0) / 
+      (healthData.filter(d => d.sleepDuration != null).length || 1)
     : 7.2;
   
-  const avgQuality = healthData
-    ? healthData.reduce((sum, data) => sum + (data.sleepQuality || 0), 0) / (healthData.filter(d => d.sleepQuality).length || 1)
+  const avgQuality = Array.isArray(healthData) && healthData.length > 0
+    ? healthData.reduce((sum, data) => sum + (data.sleepQuality || 0), 0) / 
+      (healthData.filter(d => d.sleepQuality != null).length || 1)
     : 76;
   
-  const avgDeepSleep = healthData
-    ? healthData.reduce((sum, data) => sum + (data.deepSleep || 0), 0) / (healthData.filter(d => d.deepSleep).length || 1)
+  const avgDeepSleep = Array.isArray(healthData) && healthData.length > 0
+    ? healthData.reduce((sum, data) => sum + (data.deepSleep || 0), 0) / 
+      (healthData.filter(d => d.deepSleep != null).length || 1)
     : 1.7;
   
   if (isLoading) {
