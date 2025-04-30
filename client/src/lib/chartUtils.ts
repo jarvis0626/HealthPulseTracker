@@ -9,8 +9,8 @@ export const activityChartConfig = (data: number[] = [0, 0, 0, 0, 0, 0]) => {
     datasets: [{
       label: 'Steps',
       data,
-      borderColor: 'hsl(var(--primary))',
-      backgroundColor: 'hsl(var(--primary) / 0.1)',
+      borderColor: '#3B82F6', // Replace hsl variable with fixed color
+      backgroundColor: 'rgba(59, 130, 246, 0.1)',
       fill: true,
       tension: 0.4,
       borderWidth: 2,
@@ -122,7 +122,7 @@ export const forecastChartConfig = (
     datasets: [{
       label: 'Actual',
       data: actual,
-      borderColor: 'hsl(var(--primary))',
+      borderColor: '#3B82F6',
       borderWidth: 2,
       tension: 0.4,
       pointRadius: 3,
@@ -176,10 +176,10 @@ export const activityDistributionChartConfig = (
     datasets: [{
       data,
       backgroundColor: [
-        'hsl(var(--primary))', 
+        '#3B82F6', // Replace hsl variable with fixed color 
         '#57D9A3', 
         '#FF7D54', 
-        'hsl(var(--muted))'
+        '#E5E7EB' // Replace hsl muted variable with fixed color
       ],
       borderWidth: 0,
     }]

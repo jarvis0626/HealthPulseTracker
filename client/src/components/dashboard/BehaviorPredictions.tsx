@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { usePredictions, useConfirmPrediction } from "@/hooks/usePredictions";
 import { useToast } from "@/hooks/use-toast";
-import { Terminal, Bed, Smile, Heart, DollarSign } from "lucide-react";
+import { Terminal, Bed, Smile, Heart, DollarSign, Activity, Moon, Zap } from "lucide-react";
 
 export default function BehaviorPredictions() {
   const { data: predictions, isLoading, error } = usePredictions();
@@ -27,26 +27,30 @@ export default function BehaviorPredictions() {
     });
   };
   
-  const getActivityIcon = (type: string | null) => {
+  function getActivityIcon(type: string | null) {
     // Safeguard against null or undefined values
     if (!type) {
-      return <Terminal className="text-primary h-5 w-5" />;
+      return <Activity className="text-primary h-5 w-5" />;
     }
     
     const typeStr = type.toLowerCase();
     if (typeStr.includes("run") || typeStr.includes("activity")) {
-      return <Terminal className="text-primary h-5 w-5" />;
+      return <Activity className="text-blue-500 h-5 w-5" />;
     } else if (typeStr.includes("sleep")) {
-      return <Bed className="text-secondary h-5 w-5" />;
+      return <Moon className="text-indigo-500 h-5 w-5" />;
     } else if (typeStr.includes("mood")) {
       return <Smile className="text-yellow-500 h-5 w-5" />;
     } else if (typeStr.includes("prayer") || typeStr.includes("spiritual")) {
       return <Heart className="text-red-500 h-5 w-5" />; 
     } else if (typeStr.includes("financ")) {
       return <DollarSign className="text-green-500 h-5 w-5" />;
+    } else if (typeStr.includes("stress")) {
+      return <Zap className="text-orange-500 h-5 w-5" />;
+    } else if (typeStr.includes("health") || typeStr.includes("risk")) {
+      return <Activity className="text-red-500 h-5 w-5" />;
     }
-    // Add more icons as needed
-    return <Terminal className="text-primary h-5 w-5" />;
+    // Default icon
+    return <Activity className="text-primary h-5 w-5" />;
   };
   
   if (isLoading) {
