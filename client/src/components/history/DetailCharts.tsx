@@ -35,12 +35,12 @@ export default function DetailCharts({ startDate, endDate }: DetailChartsProps) 
   const { data: healthData, isLoading } = useHealthDataRange(1, startDate, endDate);
   
   // Use first health data entry for activity types distribution
-  const activityTypes = healthData && healthData.length > 0 && healthData[0].activityTypes
+  const activityTypes = healthData && healthData.length > 0 && healthData[0]?.activityTypes
     ? [
-        healthData[0].activityTypes.walking,
-        healthData[0].activityTypes.running,
-        healthData[0].activityTypes.cycling,
-        healthData[0].activityTypes.other
+        healthData[0].activityTypes.walking || 0,
+        healthData[0].activityTypes.running || 0,
+        healthData[0].activityTypes.cycling || 0,
+        healthData[0].activityTypes.other || 0
       ]
     : [45, 25, 20, 10]; // Default values
   

@@ -28,6 +28,15 @@ export function useHealthDataRange(
       { startDate: formattedStart, endDate: formattedEnd },
     ],
     enabled: queryEnabled,
+    select: (data) => {
+      // If data is an array, return it; if it's a single object, wrap it in an array
+      if (Array.isArray(data)) {
+        return data;
+      } else if (data) {
+        return [data];
+      }
+      return [];
+    }
   });
 }
 

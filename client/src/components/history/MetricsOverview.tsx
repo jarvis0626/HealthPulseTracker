@@ -11,13 +11,26 @@ export default function MetricsOverview({ startDate, endDate }: MetricsOverviewP
   const { data: healthData, isLoading } = useHealthDataRange(1, startDate, endDate);
   
   // Calculate metrics from health data
-  const totalSteps = healthData?.reduce((sum, data) => sum + (data.steps || 0), 0) || 0;
-  const totalCalories = healthData?.reduce((sum, data) => sum + (data.calories || 0), 0) || 0;
-  const totalActiveMinutes = healthData?.reduce((sum, data) => sum + (data.activeMinutes || 0), 0) || 0;
+  const totalSteps = Array.isArray(healthData) 
+    ? healthData.reduce((sum, data) => sum + (data.steps || 0), 0) 
+    : 0;
+  
+  const totalCalories = Array.isArray(healthData) 
+    ? healthData.reduce((sum, data) => sum + (data.calories || 0), 0) 
+    : 0;
+  
+  const totalActiveMinutes = Array.isArray(healthData) 
+    ? healthData.reduce((sum, data) => sum + (data.activeMinutes || 0), 0) 
+    : 0;
   
   // Calculate average heart rate
-  const heartRates = healthData?.filter(data => data.heartRate).map(data => data.heartRate as number) || [];
-  const avgHeartRate = heartRates.length ? Math.round(heartRates.reduce((sum, rate) => sum + rate, 0) / heartRates.length) : 0;
+  const heartRates = Array.isArray(healthData) 
+    ? healthData.filter(data => data.heartRate != null).map(data => data.heartRate as number) 
+    : [];
+  
+  const avgHeartRate = heartRates.length 
+    ? Math.round(heartRates.reduce((sum, rate) => sum + rate, 0) / heartRates.length) 
+    : 0;
   
   // For comparison with previous period (simplified)
   const stepsComparison = 12; // Percentage increase
